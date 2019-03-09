@@ -6,6 +6,10 @@ import hackbright
 
 app = Flask(__name__)
 
+@app.rout('/')
+def homepage():
+
+
 
 @app.route("/student")
 def get_student():
@@ -58,9 +62,14 @@ def list_project_details():
     """Listing title, description and max grade for a project"""
     title = request.args.get('title')
     project_list = hackbright.get_project_by_title(title)
+    student_grades_list = hackbright.get_grades_by_title(title)
 
+    print(student_grades_list)
+    for student in student_grades_list:
+        print('student', student[0], student[1])
     return render_template("project_page.html",
-        project_list=project_list)
+        project_list=project_list,
+        student_grades_list=student_grades_list)
     
 
 if __name__ == "__main__":
